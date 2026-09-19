@@ -7,11 +7,10 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SITE_NAME, STUDIO_LOCATION } from "@/lib/labels";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+import { getSiteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: getSiteUrl(),
   title: { default: `${SITE_NAME} | Ballroom dancing in Mullingar`, template: `%s | ${SITE_NAME}` },
   description: `Ballroom dance classes for adults and kids in ${STUDIO_LOCATION}, taught by ballet master Anastasiia Fedorova. Free drop-in classes, no experience or partner needed.`,
   openGraph: {

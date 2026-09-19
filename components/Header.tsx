@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { logout } from "@/app/actions/auth";
 import { getCurrentUser } from "@/lib/session";
@@ -23,8 +24,11 @@ export async function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-ink/10 bg-ivory/90 backdrop-blur">
       <div className={`${container} flex h-16 items-center justify-between gap-4`}>
-        <Link href="/" className="font-serif text-2xl font-semibold tracking-tight text-burgundy">
-          {SITE_NAME}
+        <Link href="/" className="flex items-center gap-2.5" aria-label={`${SITE_NAME} home`}>
+          <Image src="/images/logo-mark.png" alt="" width={40} height={40} priority className="h-10 w-10" />
+          <span className="font-serif text-xl font-semibold tracking-tight text-burgundy sm:text-2xl">
+            {SITE_NAME}
+          </span>
         </Link>
 
         <nav aria-label="Main" className="hidden items-center gap-7 md:flex">

@@ -55,7 +55,7 @@ For local development you can also use any Postgres on `localhost`; the app swit
    | --- | --- |
    | `DATABASE_URL` | Neon pooled connection string |
    | `AUTH_SECRET` | random string: `npx auth secret` or `openssl rand -base64 32` |
-   | `NEXT_PUBLIC_SITE_URL` | your site URL, for example `https://grandeballroomstudio.com` |
+   | `NEXT_PUBLIC_SITE_URL` | optional custom site URL, for example `https://grandeballroomstudio.com`; leave blank to use the Vercel production domain |
    | `CRON_SECRET` | any long random string (protects the reminder job) |
    | `RESEND_API_KEY`, `EMAIL_FROM`, `CONTACT_EMAIL` | optional, to enable email |
 
@@ -63,6 +63,8 @@ For local development you can also use any Postgres on `localhost`; the app swit
 5. Add the domain under Settings, Domains once you buy grandeballroomstudio.com. For email from that domain, verify it in Resend and set `EMAIL_FROM` to something like `Grande Ballroom Studio <hello@grandeballroomstudio.com>`.
 
 `vercel.json` runs `/api/cron/reminders` daily at 09:00 UTC to email tomorrow's students.
+
+Site metadata uses `NEXT_PUBLIC_SITE_URL` when valid, then Vercel's `VERCEL_PROJECT_PRODUCTION_URL`, then `VERCEL_URL`, and finally `http://localhost:3000` for local development. Blank values are skipped and hostnames without a protocol use HTTPS. Keep Vercel's system environment variables enabled for automatic domain detection.
 
 ## Roles
 

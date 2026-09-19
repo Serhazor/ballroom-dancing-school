@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { SITE_NAME, STUDIO_LOCATION, TEACHER_NAME } from "@/lib/labels";
 import { container } from "@/lib/ui";
@@ -7,7 +8,13 @@ export function Footer() {
     <footer className="mt-24 bg-burgundy-deep text-ivory/85">
       <div className={`${container} grid gap-10 py-14 md:grid-cols-3`}>
         <div>
-          <p className="font-serif text-2xl text-ivory">{SITE_NAME}</p>
+          <Image
+            src="/images/logo-lockup.png"
+            alt={SITE_NAME}
+            width={1400}
+            height={530}
+            className="h-auto w-64"
+          />
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-ivory/70">
             Ballroom dancing for adults and children, taught by {TEACHER_NAME}.
           </p>
