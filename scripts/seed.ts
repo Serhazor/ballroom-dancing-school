@@ -15,12 +15,15 @@ import { addDays, todayKey, weekdayOf, zonedDate } from "../lib/time";
 async function main() {
   const email = (process.env.ADMIN_EMAIL ?? "").toLowerCase();
   const password = process.env.ADMIN_PASSWORD ?? "";
-  if (!email || password.length < 8) {
-    throw new Error("Set ADMIN_EMAIL and ADMIN_PASSWORD (8+ characters) in .env.local first.");
+  const hasAdminCreds = !!email && password.length >= 8;
+  if (!hasAdminCreds) {
+    console.warn("ADMIN_EMAIL / ADMIN_PASSWORD (8+ chars) not set: skipping admin creation.");
   }
 
-  const [admin] = await db.select().from(users).where(eq(users.email, email)).limit(1);
-  if (!admin) {
+  const [admin] = hasAdminCreds
+    ? await db.select().from(users).where(eq(users.email, email)).limit(1)
+    : [undefined];
+  if (hasAdminCreds && !admin) {
     await db.insert(users).values({
       name: process.env.ADMIN_NAME ?? "Admin",
       email,
@@ -28,7 +31,7 @@ async function main() {
       role: "admin",
     });
     console.log(`Created admin ${email}`);
-  } else {
+  } else if (hasAdminCreds) {
     console.log(`Admin ${email} already exists`);
   }
 
